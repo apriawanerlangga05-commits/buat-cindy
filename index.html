@@ -589,6 +589,9 @@
                     <img src="fotokita (2).jpeg" alt="Foto Kita 2">
                     <img src="fotokita (3).jpeg" alt="Foto Kita 3">
                     <img src="fotokita (4).jpeg" alt="Foto Kita 4">
+                    <img src="fotokita (5).jpeg" alt="Foto Kita 5">
+                    <img src="fotokita (6).jpeg" alt="Foto Kita 6">
+                    <img src="fotokita (7).jpeg" alt="Foto Kita 7">
                 </div>
                 <button class="carousel-btn prev-btn" onclick="moveSlide(-1)">❮</button>
                 <button class="carousel-btn next-btn" onclick="moveSlide(1)">❯</button>
@@ -735,7 +738,7 @@
             document.getElementById('bucinModal').classList.add('active');
             
             // Setel ulang isi popup saat dibuka kembali
-            document.getElementById('textBucin').innerHTML = "Kamu mau aku TF 1 juta ga? 🤑💸";
+            document.getElementById('textBucin').innerHTML = "Kamu mau aku TF 1 juta ga sayang? 🤑💸";
             document.getElementById('btnContainer').innerHTML = `
                 <button id="btnYes" class="next-bucin-btn" style="margin: 0; background: #ff7b90; color: white; position: static; z-index: 11;" onmouseover="moveYesBtn()" onclick="moveYesBtn(event)" ontouchstart="moveYesBtn(event)">Mau ❤️</button>
                 <button id="btnNo" class="next-bucin-btn" style="margin: 0; background: #f5f5f5; color: #888; border: 2px solid #ddd; z-index: 10;" onclick="refuseMoney()">Engga 😜</button>
@@ -779,7 +782,7 @@
         // PERUBAHAN DISINI: Kondisi pasrah kalau mencet tombol "Engga" yang sudah raksasa
         function refuseMoney() {
             const textEl = document.getElementById('textBucin');
-            textEl.innerHTML = "yaudah sih kalau gamau ya sayang, kokop aja 🥺👉👈";
+            textEl.innerHTML = "yaudah sih kalau sayang gamau, MhAHAHAHa🥺👉👈";
             document.getElementById('btnContainer').innerHTML = `<button class="next-bucin-btn" style="margin:0; background: #ff7b90; color: white;" onclick="closeBucinPopup()">Tutup 💖</button>`;
         }
 
