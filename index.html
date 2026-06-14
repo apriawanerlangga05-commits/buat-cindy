@@ -369,7 +369,7 @@
             font-size: 1rem;
             cursor: pointer;
             box-shadow: 0 6px 20px rgba(255, 123, 144, 0.25);
-            transition: all 0.3;
+            transition: all 0.3s;
         }
 
         .open-popup-btn:hover {
@@ -409,7 +409,7 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             transform: scale(0.8);
             transition: all 0.4s ease;
-            overflow: hidden; /* Mencegah tombol meluber keluar card */
+            overflow: hidden; /* Biar tombol meluber ga keluar garis kotak */
         }
 
         .bucin-modal.active .modal-content {
@@ -604,18 +604,18 @@
             </div>
         </section>
 
-        <!-- MODAL OVERLAY POPUP TRICK BUTTON (MAU / ENGGA) -->
+        <!-- MODAL OVERLAY POPUP TRICK BUTTON (MAU / ENGGA) - LOGIKA DI-BALIK -->
         <div id="bucinModal" class="bucin-modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeBucinPopup()">&times;</span>
                 <div class="modal-body">
-                    <!-- Pertanyaan Utama -->
-                    <p id="textBucin" class="text-bucin">Kamu mau aku TF 1 jt? 🥺❤️</p>
+                    <!-- Pertanyaan Utama Baru -->
+                    <p id="textBucin" class="text-bucin">Kamu mau aku TF 1 juta ga? 🤑💸</p>
                     
                     <!-- Wadah Tombol Pilihan Pilihan -->
-                    <div id="btnContainer" style="margin-top: 25px; position: relative; height: 100px; display: flex; justify-content: center; align-items: center; gap: 20px;">
-                        <button id="btnYes" class="next-bucin-btn" style="margin: 0; background: #ff7b90; color: white; z-index: 10;" onclick="accLove()">Mau ❤️</button>
-                        <button id="btnNo" class="next-bucin-btn" style="margin: 0; background: #f5f5f5; color: #888; border: 2px solid #ddd; position: static; z-index: 11;" onmouseover="moveNoBtn()" onclick="moveNoBtn(event)" ontouchstart="moveNoBtn(event)">Engga 😜</button>
+                    <div id="btnContainer" style="margin-top: 25px; position: relative; height: 110px; display: flex; justify-content: center; align-items: center; gap: 20px;">
+                        <button id="btnYes" class="next-bucin-btn" style="margin: 0; background: #ff7b90; color: white; position: static; z-index: 11;" onmouseover="moveYesBtn()" onclick="moveYesBtn(event)" ontouchstart="moveYesBtn(event)">Mau ❤️</button>
+                        <button id="btnNo" class="next-bucin-btn" style="margin: 0; background: #f5f5f5; color: #888; border: 2px solid #ddd; z-index: 10;" onclick="refuseMoney()">Engga 😜</button>
                     </div>
                 </div>
             </div>
@@ -727,49 +727,69 @@
         }
 
 
-        // 4. LOGIKA POPUP PESAN INTERAKTIF - TRICK TOMBOL KABUR & BESAR
-        let yesButtonScale = 1; // Menyimpan skala tombol "Mau"
+        // 4. LOGIKA REVERSE POPUP TRICK - MAU KABUR JAUH, ENGGA JADI BESAR
+        let noButtonScale = 1; 
+        let yesMoveCount = 0;
 
         function openBucinPopup() {
             document.getElementById('bucinModal').classList.add('active');
             
-            // Mengembalikan ke kondisi semula saat popup dibuka kembali
-            document.getElementById('textBucin').innerHTML = "Kamu mau aku TF 1 jt? 🥺❤️";
+            // Setel ulang isi popup saat dibuka kembali
+            document.getElementById('textBucin').innerHTML = "Kamu mau aku TF 1 juta ga? 🤑💸";
             document.getElementById('btnContainer').innerHTML = `
-                <button id="btnYes" class="next-bucin-btn" style="margin: 0; background: #ff7b90; color: white; z-index: 10;" onclick="accLove()">Mau ❤️</button>
-                <button id="btnNo" class="next-bucin-btn" style="margin: 0; background: #f5f5f5; color: #888; border: 2px solid #ddd; position: static; z-index: 11;" onmouseover="moveNoBtn()" onclick="moveNoBtn(event)" ontouchstart="moveNoBtn(event)">Engga 😜</button>
+                <button id="btnYes" class="next-bucin-btn" style="margin: 0; background: #ff7b90; color: white; position: static; z-index: 11;" onmouseover="moveYesBtn()" onclick="moveYesBtn(event)" ontouchstart="moveYesBtn(event)">Mau ❤️</button>
+                <button id="btnNo" class="next-bucin-btn" style="margin: 0; background: #f5f5f5; color: #888; border: 2px solid #ddd; z-index: 10;" onclick="refuseMoney()">Engga 😜</button>
             `;
-            yesButtonScale = 1; // Reset ukuran kembali normal
+            noButtonScale = 1; 
+            yesMoveCount = 0;
         }
 
         function closeBucinPopup() {
             document.getElementById('bucinModal').classList.remove('active');
         }
 
-        // Fungsi utama membuat tombol "Engga" melompat kabur, dan membuat tombol "Mau" membesar!
-        function moveNoBtn(event) {
-            if (event) event.preventDefault(); // Mencegah klik bawaan pada layar sentuh HP
+        // Fungsi membuat tombol "Mau" GESER JAUH, dan tombol "Engga" MEMBESAR!
+        function moveYesBtn(event) {
+            if (event) event.preventDefault(); // Mengunci sentuhan bawaan di layar HP
+            yesMoveCount++;
             
-            // 1. Logika Tombol Engga Kabur secara Acak
-            const btnNo = document.getElementById('btnNo');
-            btnNo.style.position = 'absolute';
-            const x = Math.floor(Math.random() * 160) - 80;   
-            const y = Math.floor(Math.random() * 120) - 80;  
-            btnNo.style.transform = `translate(${x}px, ${y}px)`;
-
-            // 2. Logika Tombol Mau Makin Diperbesar Semakin Banyak Dihindari
-            yesButtonScale += 0.2; // Ukuran naik 20% setiap kali tombol Engga dipicu
+            // 1. Logika Tombol Mau Geser Jauh Secara Acak
             const btnYes = document.getElementById('btnYes');
-            btnYes.style.transform = `scale(${yesButtonScale})`;
+            btnYes.style.position = 'absolute';
+            
+            const x = Math.floor(Math.random() * 240) - 120;   // Jangkauan geser makin luas (-120px hingga 120px)
+            const y = Math.floor(Math.random() * 160) - 100;   // Jangkauan tinggi acak (-100px hingga 60px)
+            btnYes.style.transform = `translate(${x}px, ${y}px)`;
+
+            // 2. Logika Tombol Engga Malah Makin Membesar Sekali Senggol
+            noButtonScale += 0.25; // Ukuran membesar 25% setiap digeser
+            const btnNo = document.getElementById('btnNo');
+            btnNo.style.transform = `scale(${noButtonScale})`;
+
+            // Anti-Stuck: Kalau sudah dihindari 7 kali, tombol Mau akan berhenti lari biar bisa diklik asli!
+            if (yesMoveCount > 7) {
+                btnYes.removeAttribute('onmouseover');
+                btnYes.removeAttribute('ontouchstart');
+                btnYes.setAttribute('onclick', 'accMoney()');
+                btnYes.style.background = "#ff477e";
+                btnYes.innerHTML = "Mau ❤️ (Klik Sini!)";
+            }
         }
 
-        // Fungsi sukses ketika tombol "Mau" akhirnya terklik
-        function accLove() {
+        // Kondisi kalau dipaksa klik tombol "Engga" yang sudah raksasa
+        function refuseMoney() {
+            const textEl = document.getElementById('textBucin');
+            textEl.innerHTML = "Ehh mana ada ditolak! Harus mau pokoknya! Lumayan jajan~ 😜💸";
+            document.getElementById('btnContainer').innerHTML = `<button class="next-bucin-btn" style="margin:0; background: #ff7b90; color: white;" onclick="accMoney()">Mau ❤️</button>`;
+        }
+
+        // Kondisi sukses kalau berhasil klik "Mau"
+        function accMoney() {
             const textEl = document.getElementById('textBucin');
             const container = document.getElementById('btnContainer');
             
-            textEl.innerHTML = "Yeaaayy! Aku juga sayang banget banget sama kamu LeonQueen!! 👑💖✨";
-            container.innerHTML = `<button class="next-bucin-btn" style="margin:0; background: #ff7b90; color: white;" onclick="closeBucinPopup()">Selesai ❤️</button>`;
+            textEl.innerHTML = "Asiiik! Ditunggu yaaa, langsung otw ditransfer Erlangga 1 juta! 🤑💸 Tagih sekarang sayang! ❤️✨";
+            container.innerHTML = `<button class="next-bucin-btn" style="margin:0; background: #ff7b90; color: white;" onclick="closeBucinPopup()">Selesai 💖</button>`;
         }
 
 
