@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erlangga & Cindy's Story</title>
+    
+    <!-- Font Elegan dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================== STYLE (CSS) ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fcf8f7;
+            color: #4a4a4a;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: #2c2c2c;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(254, 243, 243, 0.8)), 
+                        url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1200') no-repeat center center/cover;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin: 15px 0;
+            letter-spacing: 2px;
+            color: #b87d6c;
+        }
+
+        .sub-title {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #8e8e8e;
+        }
+
+        .motto {
+            font-style: italic;
+            font-family: 'Playfair Display', serif;
+            color: #6e6e6e;
+        }
+
+        /* Timer Section */
+        .timer-section {
+            padding: 100px 20px;
+            text-align: center;
+            background-color: #ffffff;
+        }
+
+        .timer-section h2 {
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: #fdfaf9;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(184, 125, 108, 0.08);
+            min-width: 100px;
+            border: 1px solid #f5eae6;
+        }
+
+        .time-box span {
+            font-size: 2.5rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            color: #b87d6c;
+        }
+
+        .time-box p {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #a0a0a0;
+            margin-top: 5px;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 100px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-section h2 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .timeline {
+            position: relative;
+            border-left: 1px solid #e1d0cc;
+            padding-left: 30px;
+            margin-left: 20px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 11px;
+            height: 11px;
+            background-color: #b87d6c;
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: #b87d6c;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        /* Letter Section */
+        .letter-section {
+            padding: 100px 20px;
+            background-color: #f9f3f1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .letter-card {
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 16px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
+            border: 1px solid #f0e4e1;
+        }
+
+        .letter-card h2 {
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .letter-card p {
+            line-height: 1.8;
+            color: #646464;
+            font-size: 1.05rem;
+        }
+
+        .regards {
+            margin-top: 30px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        /* Floating Music Button */
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(184, 125, 108, 0.15);
+            cursor: pointer;
+            z-index: 1000;
+            border: 1px solid #f5eae6;
+            transition: transform 0.3s ease;
+        }
+
+        .music-player:hover {
+            transform: scale(1.1);
+        }
+
+        .music-icon {
+            font-size: 1.2rem;
+        }
+
+        .playing {
+            animation: spin 4s linear infinite;
+            background: #fdfaf9;
+            border-color: #b87d6c;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="sub-title">The Story of Us</p>
+            <h1>Erlangga & Cindy</h1>
+            <p class="motto">“In all the world, there is no heart for me like yours.”</p>
+        </div>
+    </section>
+
+    <!-- COUNTDOWN TIMER -->
+    <section class="timer-section">
+        <h2>Menghitung Hari Bersamamu</h2>
+        <div class="countdown-container">
+            <div class="time-box"><span id="days">00</span><p>Hari</p></div>
+            <div class="time-box"><span id="hours">00</span><p>Jam</p></div>
+            <div class="time-box"><span id="minutes">00</span><p>Menit</p></div>
+            <div class="time-box"><span id="seconds">00</span><p>Detik</p></div>
+        </div>
+    </section>
+
+    <!-- TIMELINE MOMEN -->
+    <section class="timeline-section">
+        <h2>Momen Berharga</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">16 September 2024</div>
+                <div class="timeline-content">
+                    <h3>Hari Jadi Kita</h3>
+                    <p>Hari di mana kita memutuskan untuk mengikat janji bersama, memulai cerita indah yang akan kita ukir selamanya.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SURAT CINTA -->
+    <section class="letter-section">
+        <div class="letter-card">
+            <h2>Untuk Cindy Sriwahyuni,</h2>
+            <p>Terima kasih sudah menjadi bagian terindah dalam hidupku. Web ini adalah ruang kecil digital kita, pengingat bahwa setiap detik yang kita lalui bersama adalah hal yang sangat berharga.</p>
+            <p class="regards">Dengan cinta, <br><strong>Erlangga Afriawan</strong></p>
+        </div>
+    </section>
+
+    <!-- FLOATING MUSIC PLAYER -->
+    <div class="music-player" id="musicBtn">
+        <span class="music-icon" id="musicIcon">🎵</span>
+        <!-- Ganti URL src di bawah ini dengan link lagu .mp3 pilihanmu -->
+        <audio id="bgMusic" loop>
+            <source src="lagukita.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- ==================== LOGIC (JAVASCRIPT) ==================== -->
+    <script>
+        // Set tanggal jadian: 16 September 2024 (Bulan di JS dimulai dari 0, Jan=0, Sep=8)
+        const tanggalJadian = new Date(2024, 8, 16, 0, 0, 0); 
+
+        function updateMasaBahagia() {
+            const sekarang = new Date();
+            const selisih = sekarang - tanggalJadian;
+
+            const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+            const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+            const detik = Math.floor((selisih % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = hari.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = jam.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = menit.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = detik.toString().padStart(2, '0');
+        }
+
+        setInterval(updateMasaBahagia, 1000);
+        updateMasaBahagia();
+
+        // Logika Musik Player
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        const musicIcon = document.getElementById('musicIcon');
+
+        function playAudio() {
+            bgMusic.play();
+            musicBtn.classList.add('playing');
+            musicIcon.innerText = "❤️";
+        }
+
+        function toggleAudio() {
+            if (bgMusic.paused) {
+                playAudio();
+            } else {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+                musicIcon.innerText = "🎵";
+            }
+        }
+
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleAudio();
+        });
+
+        document.addEventListener('click', () => {
+            if (bgMusic.paused && !musicBtn.classList.contains('playing')) {
+                playAudio();
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
