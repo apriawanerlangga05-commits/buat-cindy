@@ -345,9 +345,10 @@
         <div class="login-card" id="loginCard">
             <div class="avatar">🔒💖</div>
             <h2>Ruang Cinta</h2>
-            <p>Petunjuk: Tanggal & bulan jadian kita (Contoh: 1610)</p>
+            <!-- Petunjuk baru sesuai request kamu -->
+            <p>Petunjuk: masa gatau cih LeonQueen ❤️</p>
             <div class="input-group">
-                <input type="password" id="passwordInput" placeholder="••••" maxlength="4">
+                <input type="password" id="passwordInput" placeholder="••••••" maxlength="6">
             </div>
             <button class="login-btn" onclick="checkPassword()">Buka Surat ✨</button>
         </div>
@@ -416,8 +417,8 @@
             const mainContent = document.getElementById('main-content');
             const loginCard = document.getElementById('loginCard');
             
-            // Password diubah: 1610 (16 Oktober)
-            if (input === '1610') {
+            // Password: 161021
+            if (input === '161021') {
                 loginPage.style.transform = 'translateY(-100vh)';
                 loginPage.style.opacity = '0';
                 
@@ -442,12 +443,11 @@
 
 
         // 2. LOGIKA TIMER JADIAN (16 Oktober 2024)
-        // Januari=0, September=8, Oktober=9
         const tanggalJadian = new Date(2024, 9, 16, 0, 0, 0); 
 
         function updateMasaBahagia() {
             const sekarang = new Date();
-            const selisih = Thermal = sekarang - tanggalJadian;
+            const selisih = sekarang - tanggalJadian;
 
             const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
             const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
