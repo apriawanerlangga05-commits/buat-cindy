@@ -329,7 +329,7 @@
         .prev-btn { left: 12px; }
         .next-btn { right: 12px; }
 
-        /* ==================== NEW: INTERAKTIF STYLE (HTMLKU STYLE) ==================== */
+        /* INTERAKTIF STYLE (KOTAK RAHASIA) */
         .interactive-section {
             padding: 80px 20px;
             background-color: #ffffff;
@@ -428,7 +428,7 @@
 
         .text-bucin {
             font-family: 'Fredoka', sans-serif;
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             color: #4a4a4a;
             min-height: 90px;
             display: flex;
@@ -441,13 +441,12 @@
             background: #ffe3e7;
             color: #ff7b90;
             border: 2px solid #ffccd5;
-            padding: 10px 30px;
+            padding: 10px 25px;
             border-radius: 15px;
             font-family: 'Fredoka', sans-serif;
             font-size: 1rem;
             cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.2s;
+            transition: all 0.15s ease;
         }
 
         .next-bucin-btn:hover {
@@ -594,22 +593,28 @@
             </div>
         </section>
 
-        <!-- TEMPAT BARU: INTERAKTIF BUCIN (STYLE HTMLKU.COM) -->
+        <!-- KOTAK INTERAKTIF GAME TEBAKAN SANG RAHASIA -->
         <section class="interactive-section">
             <div class="interactive-card">
-                <h3>Pokoknya Ada Pesan Penting! 🎁</h3>
-                <p>Erlangga punya pesan khusus yang sengaja disembunyiin di sini, klik tombolnya ya!</p>
-                <button class="open-popup-btn" onclick="openBucinPopup()">Buka Pesan Pokoknya ❤️</button>
+                <h3>Surat Rahasia Terkunci 🔐</h3>
+                <p>Ada sebuah pertanyaan rahasia dari Erlangga di dalam sini, jawab jujur ya!</p>
+                <button class="open-popup-btn" onclick="openBucinPopup()">Buka Pertanyaan ❤️</button>
             </div>
         </section>
 
-        <!-- MODAL OVERLAY POPUP BUCIN -->
+        <!-- MODAL OVERLAY POPUP TRICK BUTTON (MAU / ENGGA) -->
         <div id="bucinModal" class="bucin-modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeBucinPopup()">&times;</span>
                 <div class="modal-body">
-                    <p id="textBucin" class="text-bucin">Klik tombol di bawah untuk mulai...</p>
-                    <button id="nextBucinBtn" class="next-bucin-btn" onclick="nextBucinMessage()">Mulai ✨</button>
+                    <!-- Pertanyaan Utama -->
+                    <p id="textBucin" class="text-bucin">Kamu sayang aku nggak? 🥺❤️</p>
+                    
+                    <!-- Wadah Tombol Pilihan Pilihan -->
+                    <div id="btnContainer" style="margin-top: 25px; position: relative; height: 70px; display: flex; justify-content: center; align-items: center; gap: 20px;">
+                        <button id="btnYes" class="next-bucin-btn" style="margin: 0; background: #ff7b90; color: white;" onclick="accLove()">Mau ❤️</button>
+                        <button id="btnNo" class="next-bucin-btn" style="margin: 0; background: #f5f5f5; color: #888; border: 2px solid #ddd; position: static;" onmouseover="moveNoBtn()" onclick="moveNoBtn(event)" ontouchstart="moveNoBtn(event)">Engga 😜</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -720,39 +725,42 @@
         }
 
 
-        // 4. NEW: LOGIKA POPUP PESAN INTERAKTIF (HTMLKU STYLE)
-        // Kamu bisa ganti/tambah isi kalimat di dalam tanda kurung kotak ini sesukamu ya!
-        const bucinMessages = [
-            "Hai Cindy Sriwahyuni... ❤️",
-            "Aku cuma mau bilang sesuatu pokoknya...",
-            "Makasih banyak ya udah hadir dan bertahan di hidup Erlangga 🥰",
-            "Jangan pernah bosen-bosen sama aku yaaa.. 🥺",
-            "Pokoknya gimanapun kondisinya nanti...",
-            "I LOVE YOU SO MUCH LEONQUEEN!! 👑💖"
-        ];
-        let currentBucinIdx = -1;
-
+        // 4. LOGIKA POPUP PESAN INTERAKTIF - TRICK TOMBOL KABUR
         function openBucinPopup() {
             document.getElementById('bucinModal').classList.add('active');
-            currentBucinIdx = -1;
-            nextBucinMessage();
+            
+            // Mengembalikan ke kondisi semula saat popup dibuka kembali
+            document.getElementById('textBucin').innerHTML = "Kamu sayang aku nggak? 🥺❤️";
+            document.getElementById('btnContainer').innerHTML = `
+                <button id="btnYes" class="next-bucin-btn" style="margin: 0; background: #ff7b90; color: white;" onclick="accLove()">Mau ❤️</button>
+                <button id="btnNo" class="next-bucin-btn" style="margin: 0; background: #f5f5f5; color: #888; border: 2px solid #ddd; position: static;" onmouseover="moveNoBtn()" onclick="moveNoBtn(event)" ontouchstart="moveNoBtn(event)">Engga 😜</button>
+            `;
         }
 
         function closeBucinPopup() {
             document.getElementById('bucinModal').classList.remove('active');
         }
 
-        function nextBucinMessage() {
-            currentBucinIdx++;
-            const textEl = document.getElementById('textBucin');
-            const btnEl = document.getElementById('nextBucinBtn');
+        // Fungsi utama yang membuat tombol "Engga" melompat kabur secara acak
+        function moveNoBtn(event) {
+            if (event) event.preventDefault(); // Mencegah klik bawaan browser terutama di HP
+            const btn = document.getElementById('btnNo');
+            btn.style.position = 'absolute';
             
-            if (currentBucinIdx < bucinMessages.length) {
-                textEl.innerHTML = bucinMessages[currentBucinIdx];
-                btnEl.innerText = (currentBucinIdx === bucinMessages.length - 1) ? "Selesai ❤️" : "Lanjut ✨";
-            } else {
-                closeBucinPopup();
-            }
+            // Rumus koordinat acak agar tombol tetap melompat di dalam batas card modal putih
+            const x = Math.floor(Math.random() * 180) - 90;   // antara -90px hingga 90px
+            const y = Math.floor(Math.random() * 140) - 100;  // antara -100px hingga 40px
+            
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        // Fungsi ketika Cindy mengklik tombol "Mau"
+        function accLove() {
+            const textEl = document.getElementById('textBucin');
+            const container = document.getElementById('btnContainer');
+            
+            textEl.innerHTML = "Yeaaayy! Aku juga sayang banget sama kamu LeonQueen!! 👑💖✨";
+            container.innerHTML = `<button class="next-bucin-btn" style="margin:0; background: #ff7b90; color: white;" onclick="closeBucinPopup()">Selesai ❤️</button>`;
         }
 
 
