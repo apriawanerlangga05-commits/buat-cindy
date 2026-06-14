@@ -770,13 +770,12 @@
             const btnNo = document.getElementById('btnNo');
             btnNo.style.transform = `scale(${noButtonScale})`;
 
-            // Anti-Stuck: Kalau dihindari 7 kali, tombol Mau berhenti lari biar bisa diklik asli
-            if (yesMoveCount > 7) {
+            // Anti-Stuck: Kalau dihindari 10 kali, tombol Mau berhenti lari biar bisa diklik asli
+            if (yesMoveCount > 10) {
                 btnYes.removeAttribute('onmouseover');
                 btnYes.removeAttribute('ontouchstart');
                 btnYes.setAttribute('onclick', 'accMoney()');
                 btnYes.style.background = "#ff477e";
-                btnYes.innerHTML = "Mau ❤️ (Klik Sini!)";
             }
         }
 
