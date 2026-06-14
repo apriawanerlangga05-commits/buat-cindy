@@ -288,6 +288,17 @@
             font-size: 2rem;
         }
 
+        /* Desain Bingkai Polaroid untuk Pilihan B */
+        .foto-kita {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 12px;
+            margin: 15px auto 25px auto;
+            display: block;
+            border: 8px solid #ffffff;
+            box-shadow: 0 8px 20px rgba(255, 123, 144, 0.15);
+        }
+
         .letter-card p {
             line-height: 1.8;
             color: #646464;
@@ -345,7 +356,6 @@
         <div class="login-card" id="loginCard">
             <div class="avatar">🔒💖</div>
             <h2>Ruang Cinta</h2>
-            <!-- Petunjuk baru sesuai request kamu -->
             <p>Petunjuk: masa gatau cih LeonQueen ❤️</p>
             <div class="input-group">
                 <input type="password" id="passwordInput" placeholder="••••••" maxlength="6">
@@ -390,10 +400,17 @@
             </div>
         </section>
 
-        <!-- SURAT CINTA -->
+        <!-- SURAT CINTA (PILIHAN B: LAMPIRAN SEMUA FOTO BERURUTAN) -->
         <section class="letter-section">
             <div class="letter-card">
                 <h2>Untuk Cindy Sriwahyuni,</h2>
+                
+                <!-- Keempat foto dipanggil berurutan satu per satu -->
+                <img src="fotokita (1).jpeg" alt="Foto Kita 1" class="foto-kita">
+                <img src="fotokita (2).jpeg" alt="Foto Kita 2" class="foto-kita">
+                <img src="fotokita (3).jpeg" alt="Foto Kita 3" class="foto-kita">
+                <img src="fotokita (4).jpeg" alt="Foto Kita 4" class="foto-kita">
+                
                 <p>Terima kasih sudah menjadi bagian terindah dalam hidupku. Web ini adalah ruang kecil digital kita, pengingat bahwa setiap detik yang kita lalui bersama adalah hal yang sangat berharga.</p>
                 <p class="regards">Dengan cinta, <br><strong>Erlangga Afriawan</strong></p>
             </div>
@@ -417,7 +434,7 @@
             const mainContent = document.getElementById('main-content');
             const loginCard = document.getElementById('loginCard');
             
-            // Password: 161024
+            // Password disamakan ke tanggal jadian asli: 161024
             if (input === '161024') {
                 loginPage.style.transform = 'translateY(-100vh)';
                 loginPage.style.opacity = '0';
@@ -442,7 +459,7 @@
         document.body.style.overflowY = 'hidden';
 
 
-        // 2. LOGIKA TIMER JADIAN (16 Oktober 2024)
+        // 2. LOGIKA TIMER JADIAN (16 Oktober 2024 -> Indeks Bulan = 9)
         const tanggalJadian = new Date(2024, 9, 16, 0, 0, 0); 
 
         function updateMasaBahagia() {
@@ -472,7 +489,7 @@
         const musicIcon = document.getElementById('musicIcon');
 
         function playAudio() {
-            bgMusic.play().catch(error => console.log("Autoplay terhalang browser, menunggu interaksi tambahan."));
+            bgMusic.play().catch(error => console.log("Autoplay terhalang browser."));
             musicBtn.classList.add('playing');
             musicIcon.innerText = "❤️";
         }
