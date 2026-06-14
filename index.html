@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erlangga & Cindy's Story</title>
     
-    <!-- Font Elegan dari Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Font Elegan & Lucu dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* ==================== STYLE (CSS) ==================== */
+        /* ==================== BASE SETUP ==================== */
         * {
             margin: 0;
             padding: 0;
@@ -21,6 +21,120 @@
             background-color: #fcf8f7;
             color: #4a4a4a;
             scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* ==================== 1. CUTE LOGIN PAGE STYLE ==================== */
+        #login-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #ffeef0; /* Warna pink pastel lucu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+        }
+
+        .login-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
+            text-align: center;
+            max-width: 360px;
+            width: 90%;
+            border: 3px solid #ffccd5;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .login-card .avatar {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        .login-card h2 {
+            font-family: 'Fredoka', sans-serif;
+            color: #ff7b90;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .login-card p {
+            font-size: 0.9rem;
+            color: #a38f92;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #ffe3e7;
+            background: #fff9fa;
+            text-align: center;
+            font-size: 1.2rem;
+            font-family: 'Fredoka', sans-serif;
+            letter-spacing: 4px;
+            color: #ff7b90;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .login-card input:focus {
+            border-color: #ff7b90;
+            background: white;
+            box-shadow: 0 0 10px rgba(255, 123, 144, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            background: #ff7b90;
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 123, 144, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #ff5c77;
+            transform: translateY(-2px);
+        }
+
+        /* Animasi salah password (getar) */
+        .shake {
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        /* ==================== 2. MAIN WEBSITE STYLE (ELEGAN) ==================== */
+        #main-content {
+            opacity: 0;
+            display: none;
+            transition: opacity 1s ease;
         }
 
         h1, h2, h3 {
@@ -226,88 +340,139 @@
 </head>
 <body>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-content">
-            <p class="sub-title">The Story of Us</p>
-            <h1>Erlangga & Cindy</h1>
-            <p class="motto">“In all the world, there is no heart for me like yours.”</p>
+    <!-- HALAMAN LOGIN (LUCU & INTERAKTIF) -->
+    <div id="login-page">
+        <div class="login-card" id="loginCard">
+            <div class="avatar">🔒💖</div>
+            <h2>Ruang Cinta</h2>
+            <p>Petunjuk: Tanggal & bulan jadian kita (Contoh: 1610)</p>
+            <div class="input-group">
+                <input type="password" id="passwordInput" placeholder="••••" maxlength="4">
+            </div>
+            <button class="login-btn" onclick="checkPassword()">Buka Surat ✨</button>
         </div>
-    </section>
+    </div>
 
-    <!-- COUNTDOWN TIMER -->
-    <section class="timer-section">
-        <h2>Menghitung Hari Bersamamu</h2>
-        <div class="countdown-container">
-            <div class="time-box"><span id="days">00</span><p>Hari</p></div>
-            <div class="time-box"><span id="hours">00</span><p>Jam</p></div>
-            <div class="time-box"><span id="minutes">00</span><p>Menit</p></div>
-            <div class="time-box"><span id="seconds">00</span><p>Detik</p></div>
-        </div>
-    </section>
+    <!-- HALAMAN UTAMA (AKAN MUNCUL SETELAH LOGIN BERHASIL) -->
+    <div id="main-content">
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="hero-content">
+                <p class="sub-title">The Story of Us</p>
+                <h1>Erlangga & Cindy</h1>
+                <p class="motto">“In all the world, there is no heart for me like yours.”</p>
+            </div>
+        </section>
 
-    <!-- TIMELINE MOMEN -->
-    <section class="timeline-section">
-        <h2>Momen Berharga</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">16 September 2024</div>
-                <div class="timeline-content">
-                    <h3>Hari Jadi Kita</h3>
-                    <p>Hari di mana kita memutuskan untuk mengikat janji bersama, memulai cerita indah yang akan kita ukir selamanya.</p>
+        <!-- COUNTDOWN TIMER -->
+        <section class="timer-section">
+            <h2>Menghitung Hari Bersamamu</h2>
+            <div class="countdown-container">
+                <div class="time-box"><span id="days">00</span><p>Hari</p></div>
+                <div class="time-box"><span id="hours">00</span><p>Jam</p></div>
+                <div class="time-box"><span id="minutes">00</span><p>Menit</p></div>
+                <div class="time-box"><span id="seconds">00</span><p>Detik</p></div>
+            </div>
+        </section>
+
+        <!-- TIMELINE MOMEN -->
+        <section class="timeline-section">
+            <h2>Momen Berharga</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">16 Oktober 2024</div>
+                    <div class="timeline-content">
+                        <h3>Hari Jadi Kita</h3>
+                        <p>Hari di mana kita memutuskan untuk mengikat janji bersama, memulai cerita indah yang akan kita ukir selamanya.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SURAT CINTA -->
-    <section class="letter-section">
-        <div class="letter-card">
-            <h2>Untuk Cindy Sriwahyuni,</h2>
-            <p>Terima kasih sudah menjadi bagian terindah dalam hidupku. Web ini adalah ruang kecil digital kita, pengingat bahwa setiap detik yang kita lalui bersama adalah hal yang sangat berharga.</p>
-            <p class="regards">Dengan cinta, <br><strong>Erlangga Afriawan</strong></p>
-        </div>
-    </section>
+        <!-- SURAT CINTA -->
+        <section class="letter-section">
+            <div class="letter-card">
+                <h2>Untuk Cindy Sriwahyuni,</h2>
+                <p>Terima kasih sudah menjadi bagian terindah dalam hidupku. Web ini adalah ruang kecil digital kita, pengingat bahwa setiap detik yang kita lalui bersama adalah hal yang sangat berharga.</p>
+                <p class="regards">Dengan cinta, <br><strong>Erlangga Afriawan</strong></p>
+            </div>
+        </section>
 
-    <!-- FLOATING MUSIC PLAYER -->
-    <div class="music-player" id="musicBtn">
-        <span class="music-icon" id="musicIcon">🎵</span>
-        <!-- Ganti URL src di bawah ini dengan link lagu .mp3 pilihanmu -->
-        <audio id="bgMusic" loop>
-            <source src="lagukita.mp3" type="audio/mpeg">
-        </audio>
+        <!-- FLOATING MUSIC PLAYER -->
+        <div class="music-player" id="musicBtn">
+            <span class="music-icon" id="musicIcon">🎵</span>
+            <audio id="bgMusic" loop>
+                <source src="lagukita.mp3" type="audio/mpeg">
+            </audio>
+        </div>
     </div>
 
     <!-- ==================== LOGIC (JAVASCRIPT) ==================== -->
     <script>
-        // Set tanggal jadian: 16 September 2024 (Bulan di JS dimulai dari 0, Jan=0, Sep=8)
-        const tanggalJadian = new Date(2024, 10, 16, 0, 0, 0); 
+        // 1. LOGIKA LOGIN
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const loginPage = document.getElementById('login-page');
+            const mainContent = document.getElementById('main-content');
+            const loginCard = document.getElementById('loginCard');
+            
+            // Password diubah: 1610 (16 Oktober)
+            if (input === '1610') {
+                loginPage.style.transform = 'translateY(-100vh)';
+                loginPage.style.opacity = '0';
+                
+                mainContent.style.display = 'block';
+                setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                    playAudio();
+                }, 300);
+
+                document.body.style.overflowY = 'auto';
+            } else {
+                loginCard.classList.add('shake');
+                alert('Ups! Password salah. Ingat-ingat lagi tanggal jadian kita ya sayang! 🥺❤️');
+                setTimeout(() => {
+                    loginCard.classList.remove('shake');
+                }, 500);
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        document.body.style.overflowY = 'hidden';
+
+
+        // 2. LOGIKA TIMER JADIAN (16 Oktober 2024)
+        // Januari=0, September=8, Oktober=9
+        const tanggalJadian = new Date(2024, 9, 16, 0, 0, 0); 
 
         function updateMasaBahagia() {
             const sekarang = new Date();
-            const selisih = sekarang - tanggalJadian;
+            const selisih = Thermal = sekarang - tanggalJadian;
 
             const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
             const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
             const detik = Math.floor((selisih % (1000 * 60)) / 1000);
 
-            document.getElementById('days').innerText = hari.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = jam.toString().padStart(2, '0');
-            document.getElementById('minutes').innerText = menit.toString().padStart(2, '0');
-            document.getElementById('seconds').innerText = detik.toString().padStart(2, '0');
+            if(document.getElementById('days')) {
+                document.getElementById('days').innerText = hari.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = jam.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = menit.toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = detik.toString().padStart(2, '0');
+            }
         }
 
         setInterval(updateMasaBahagia, 1000);
         updateMasaBahagia();
 
-        // Logika Musik Player
+
+        // 3. LOGIKA MUSIK PLAYER
         const musicBtn = document.getElementById('musicBtn');
         const bgMusic = document.getElementById('bgMusic');
         const musicIcon = document.getElementById('musicIcon');
 
         function playAudio() {
-            bgMusic.play();
+            bgMusic.play().catch(error => console.log("Autoplay terhalang browser, menunggu interaksi tambahan."));
             musicBtn.classList.add('playing');
             musicIcon.innerText = "❤️";
         }
@@ -322,16 +487,12 @@
             }
         }
 
-        musicBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleAudio();
-        });
-
-        document.addEventListener('click', () => {
-            if (bgMusic.paused && !musicBtn.classList.contains('playing')) {
-                playAudio();
-            }
-        }, { once: true });
+        if(musicBtn) {
+            musicBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleAudio();
+            });
+        }
     </script>
 </body>
 </html>
